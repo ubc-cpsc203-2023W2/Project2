@@ -1,7 +1,5 @@
 # Project 2: Cellular Automata. 
 
-## Due Thursday, Mar 24, 11:59p
-
 ## The Game
 
 In this project we will develop a platform for exploring grid-based simulations based on an approach 
