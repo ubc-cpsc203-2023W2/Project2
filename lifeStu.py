@@ -14,7 +14,10 @@ RED = (255, 0, 0)
 # padding, neighbors function, rules function, grid initialization function.
 
 class grid:
-    gridSize: Tuple[int, int] # columns, rows == x,y
+    # Updated on Mar 24, 2024 to reflect row-major
+    # Note that numpy arrays create arrays in row-major order by default, which is opposite
+    # You can read more about it here: https://numpy.org/doc/stable/glossary.html#term-row-major.
+    gridSize: Tuple[int, int] # rows, columns == y,x
     data: np.ndarray 
     generations: int 
 
