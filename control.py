@@ -1,14 +1,10 @@
-import pygame
 import numpy as np # we'll use numpy arrays as the basis for our grids. 
 import sys
 from typing import Tuple, List
 from dataclasses import dataclass, field
 
-# Define some colors, mostly useful for testing
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
+# Set the number of states to use within each cell
+states = 2  # we leave this as a global variable since it doesn't change.
 
 # Things that can be changed: number of states, grid dimensions, square size,
 # padding, neighbors function, rules function, grid initialization function.
@@ -22,7 +18,7 @@ class grid:
     generations: int 
 
     def __init__(self, size, setup):
-        self.gridSize = size
+        self.gridSize = # YOUR CODE HERE! Where do we get the size we want for the grid?
         # YOUR CODE HERE...initialize data to the result of executing setup function on input size
         self.generations = 0
 
@@ -107,6 +103,7 @@ def tally_neighbors(grid, position, neighborSet):
     return
 
 
+
 # student: putting it all together.
 # function: evolve
 # purpose: to increment the automata by *one* time step. Given an array representing the automaton at the
@@ -121,104 +118,3 @@ def evolve(gr, apply_rule, neighbors):
     return
 
 
-
-# function draw_block
-# purpose: draw a rectangle of color acolor for *grid* location x,y. Uses globals pad and sqSize.
-# function solution is:     pygame.draw.rect(screen, acolor,
-#   [upper left horiz pixel location, upper left vertical pixel location, sqSize, sqSize])
-# returns: nothing
-def draw_block(x, y, acolor):
-    # YOUR CODE HERE
-    return
-
-# function: draw
-# purpose: translates the game representation from the grid, to an image on the screen
-# param: gr, a grid. for every position in gr.data, computes a color based on the state
-# in that location, and then makes a call to draw_block to place that color into the pygame
-# screen. Also passes the grid location so draw_block can compute the correct screen location.
-# The new color is represented in HSVA (see https://www.pygame.org/docs/ref/color.html#pygame.Color.hsva
-# and has hue h = (360 // states) * current state, s = 100, and v = 50 (we just left A of HSVA 
-# at its default value). You may want to experiment with these values for artistic effect. :)
-# returns: nothing
-def draw(gr):
-    # YOUR CODE HERE
-    return
-
-# following are the game, grid, and screen parameters for the problem
-
-# Set the number of states to use within each cell
-states = 2  # we leave this as a global variable since it doesn't change.
-
-# words to display on the window
-pygame.display.set_caption("CPSC203 Life")
-
-# the game state is maintained in a grid object.
-# grid data values will be updated upon every click of the clock.
-# parameters are the (width, height) dimensions of the grid, and a
-# function that initializes the start state
-#g = grid((100, 150), randStart)
-g = grid((75,75), glideStart)
-
-# drawing parameters that determine the look of the grid when it's shown.
-# These can be set, but defaults are probably fine
-sqSize = 3  # size of the squares in pixels
-pad = sqSize // 5 # the number of pixels between each square
-
-# computed from parameters above and grid g dimensions
-s = # YOUR CODE HERE! dimensions of pixels in screen window (width,height)
-
-
-screen = pygame.display.set_mode(s)  # initializes the display window
-
-# Used to manage how fast the screen updates
-clock = pygame.time.Clock()
-
-# given: necessary for gracefully ending game loop (pygame)
-def handleInputEvents():
-    for event in pygame.event.get():  # User did something
-        if event.type == pygame.QUIT:  # If user clicked close...
-            sys.exit(0)  # quit
-
-# some variables you probably won't want to change
-frameCount = 0
-desiredGifLength = 200
-frameRate = 60
-frames = []
-
-# -------- Main Program Loop -----------
-while True: # runs continually until stopped
-    # --- Main event loop
-    handleInputEvents()
-
-    # --- Draw the grid
-    # this function loops over the data in the grid object
-    # and draws appropriately colored rectangles.
-    draw(g)
-
-    # --- Game logic should go here
-    # evolve( g, rule, neighbors)
-    # g -- an object of type grid, previously initialized to hold data start state
-    # rule -- a function that applies the game rule, given a cell state and a neighbor tally
-    # neighbors -- a function that returns a list of neighbors relative to a given x,y position.
-    #evolve(g, ruleCycle, neighborDiamond)
-    evolve(g, ruleGOL, neighborSquare)
-
-    # --- Mysterious reorientation that every pygame application seems to employ
-    pygame.display.flip()
-
-    # --- Uncomment code below to save a GIF of your custom automaton
-    # if frameCount < desiredGifLength:
-    #     pygame.image.save(screen, "temp.png")
-    #     frames.append(Image.open("temp.png"))
-    # else:
-    #     frames[0].save('custom.gif', format='GIF',
-    #                    append_images=frames[1:], duration=1000/frameRate,
-    #                    save_all=True, loop=0)
-    # frameCount += 1
-
-
-    # --- Limit to 60 frames per second
-    clock.tick(frameRate)
-
-# Close the window and quit.
-pygame.quit()

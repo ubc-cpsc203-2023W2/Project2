@@ -76,11 +76,23 @@ initialized randomly over 12 states.
 
 ![random cycle](cycle12rand.gif)
 
+## The Structure
+
+The Project contains three main files: `main.py`, `control.py`, and, `display.py`. These three files work together to run our game. 
+
+The `main.py` file contain the main program loop that runs the game. It calls functions from both  `control.py` and `display.py`.
+
+As the name suggests, `display.py` contains the display code. This is where most of our PyGame code is located.
+You are not required (and should not) modify anything in `main.py` and `display.py`.
+
+The only file you are required to modify and submit is `control.py`. This file contains all the game logic.
+
+
 ## Deliverables
 
 ### Part 1: Basic Code
 
-You must complete all the requested code inside `lifeStu.py`. Our POTD this week and next will help you with these!
+You must complete all the requested code inside `control.py`. Our POTD this week and next will help you with these!
 
 ### Part 2: Creative Component (BONUS)
 
@@ -103,7 +115,7 @@ This will be worth some small bonus on your course grade.
 
 ## Handing in your work
 
-You will be submitting your code via PrairieLearn. 
+Submit the `control.py` file to PrairieLearn.
 
 ## Good Luck!
 
