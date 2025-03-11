@@ -1,9 +1,13 @@
 import pygame
+from PIL import Image
 import numpy as np # we'll use numpy arrays as the basis for our grids. 
 import sys
-from typing import Tuple, List
-from dataclasses import dataclass, field
 import control
+
+# Parameters for saving a GIF animation.
+ANIMATION_FRAME_COUNT = 200
+ANIMATION_FILENAME = 'cellular.gif'
+ANIMATION_FRAMES = []
 
 # Define some colors, mostly useful for testing
 BLACK = (0, 0, 0)
@@ -11,24 +15,33 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
-# words to display on the window
-pygame.display.set_caption("CPSC203 Life")
-
 # drawing parameters that determine the look of the grid when it's shown.
 # These can be set, but defaults are probably fine
-sqSize = 3  # size of the squares in pixels
-pad = sqSize // 5 # the number of pixels between each square
+CELL_SIZE = 5  # size of the squares in pixels
+CELL_PAD = CELL_SIZE // 5 # the number of pixels between each square
 
-# computed from parameters above and grid g dimensions
-s = (75, 75) # dimensions of pixels in screen window (width,height)
+# function initialize_screen
+# purpose: Create a window of appropriate size for the grid.
+def initialize_screen(g):
+    # Width, Height.
+    global WINDOW_SIZE
+    WINDOW_SIZE = ((CELL_SIZE + CELL_PAD) * g.gridSize[0] + CELL_PAD,
+                   (CELL_SIZE + CELL_PAD) * g.gridSize[1] + CELL_PAD)
 
-screen = pygame.display.set_mode(s)  # initializes the display window
+    # Give the window a name.
+    pygame.display.set_caption("CPSC203 Life")
 
+    # initializes the display window
+    global SCREEN
+    SCREEN = pygame.display.set_mode(WINDOW_SIZE)
+    
 # function draw_block
-# purpose: draw a rectangle of color acolor for *grid* location x,y. Uses globals pad and sqSize.
+# purpose: draw a rectangle of color acolor for *grid* location x,y.
 # returns: nothing
 def draw_block(x, y, acolor):
-    pygame.draw.rect(screen, acolor, [x, y, sqSize, sqSize])
+    pixel_x = (CELL_SIZE + CELL_PAD) * x + CELL_PAD
+    pixel_y = (CELL_SIZE + CELL_PAD) * y + CELL_PAD
+    pygame.draw.rect(SCREEN, acolor, [pixel_x, pixel_y, CELL_SIZE, CELL_SIZE])
 
 # function: draw
 # purpose: translates the game representation from the grid, to an image on the screen
@@ -39,10 +52,10 @@ def draw_block(x, y, acolor):
 # and has hue h = (360 // states) * current state, s = 100, and v = 50 (we just left A of HSVA 
 # at its default value). You may want to experiment with these values for artistic effect. :)
 # returns: nothing
-def draw(gr, states):
-    for y in range(np.size(gr.data, 0)):
-        for x in range(np.size(gr.data, 1)):
-            state = gr.data[x][y]
+def draw(g, states):
+    for y in range(g.gridSize[0]):
+        for x in range(g.gridSize[1]):
+            state = g.data[x][y]
             col = pygame.Color(0,0,0)    
             h = (360 // states) * state
             col.hsva = (h, 100, 50)
@@ -63,3 +76,11 @@ def handleInputEvents():
         if event.type == pygame.QUIT:  # If user clicked close...
             sys.exit(0)  # quit
 
+def updateAnimation(frame_count, frame_rate):
+    if frame_count < ANIMATION_FRAME_COUNT:
+        ANIMATION_FRAMES.append(Image.frombytes('RGB', WINDOW_SIZE, pygame.image.tobytes(SCREEN, 'RGB')))
+    else:
+        ANIMATION_FRAMES[0].save(ANIMATION_FILENAME, format='GIF',
+                                 append_images=ANIMATION_FRAMES[1:], duration=1000/frame_rate,
+                                 save_all=True, loop=0)
+        sys.exit(0)
