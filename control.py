@@ -36,8 +36,8 @@ class Grid:
 # returns: an np array of size size, whose values are uniformly selected from range(states)
 def randStart(size):
     # YOUR CODE HERE
-    # You will probably want to use the generator from numpy.random which is stored
-    # in the global variable RNG defined above.
+    # To get your random numbers, you must use the generator from numpy.random which 
+    # is stored in the global variable RNG defined above.
     # See https://numpy.org/doc/stable/reference/random/index.html#random-quick-start    
     pass
 
@@ -122,10 +122,10 @@ def evolve(g, apply_rule, neighbors) -> None:
 
 # Here we define some global (to the module) variables which will determine what CA to run.
 # You will want to change these values to test out other choices for the CA elements / parameters.
-NUM_STATES = 12
+NUM_STATES = 2
 WHICH_GRID = Grid((50,50), randStart)
-WHICH_RULE = ruleCycle
-WHICH_NEIGHBOR = neighborDiamond
+WHICH_RULE = ruleGOL
+WHICH_NEIGHBOR = neighborSquare
 
 # Should we save a gif of the animation?
 # (Set the parameters (including filename) of the animation in display.py)
