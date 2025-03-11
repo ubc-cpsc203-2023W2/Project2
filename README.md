@@ -2,9 +2,21 @@
 
 ## Logistics
 
-**Do not** directly clone this template repository!  You have only write access to this template repository so you cannot push your changes to it.  Do not risk losing your work if your laptop crashes: Make your own copy of the repository using the instructions below.
+### PyGame
 
-Copy this repository as a template in to your own GitHub account by following [these instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template). Then clone your own copy to your local machine.  Using your own copy you can push and pull as much as you like (and we highly recommend that you push frequently to avoid risk of losing your work if your laptop crashes).
+A cellular automaton in 2 dimensions can be represented as an evolving 2D grid of cells, each of which is colored according to its current state.  As such, it lends itself to animated visualization.  To generate such visualizations we employ PyGame, a lightweight game engine for Python that makes windowing and game state evaluation simple and accessible. In the given code you will see references to a few PyGame functions whose role is to set up and administer the game window. You can ignore these functions (unless you would like to learn more about interactive graphics).
+
+That said, you do need to have the `pygame` module available.  Use the following command in your terminal to ensure it is installed:
+
+```terminal
+conda install -c conda-forge pygame
+```
+
+### Getting the Starter Code
+
+**Do not** directly clone the [Project 2 template repository](https://github.com/ubc-cpsc203-2023W2/Project2)!  You have only write access to the template repository so you cannot push your changes to it.  Do not risk losing your work if your laptop crashes: Make your own copy of the repository using the instructions below.
+
+Copy the template repository as a template in to your own GitHub account by following [these instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template). Then clone your own copy to your local machine.  Using your own copy you can push and pull as much as you like (and we highly recommend that you push frequently to avoid risk of losing your work if your laptop crashes).
 
 Make sure that your repository is **private** so that you are not unintentionally sharing your code with other students and thereby breaking [the course's academic dishonesty policy](https://ubc-cs.github.io/cpsc203/about/unsyllabus.html#what-is-considered-academic-dishonesty-in-this-course).
 
@@ -17,6 +29,7 @@ Classic examples of cellular automata include [Conway's Game of Life](https://en
 ## The Algorithm
 
 ### The general case
+
 Consider a 2d grid, and imagine that every cell in the grid has a *state* at a particular point in time. A grid cell's *next* state is determined by its own current state and the current states of its neighbors, based on a given *rule*.
 
 The illustration below shows a single time step for a cellular automata consisting of 64 cells in a grid. Each cell is in one of 3 states (white, green, and orange) in the first time step. The state of each cell in the next
@@ -39,10 +52,6 @@ In order to start a sequence of time steps, each cell must have an initial state
 
 - One version which gives a fascinating result within Conway's GOL.
 - A second version that simply generates a grid containing states uniformly chosen from the set of possible states.
-
-## PyGame
-
-A cellular automaton in 2 dimensions can be represented as an evolving 2D grid of cells, each of which is colored according to its current state.  As such, it lends itself to animated visualization.  To generate such visualizations we employ PyGame, a lightweight game engine for Python that makes windowing and game state evaluation simple and accessible. In the given code you will see references to a few PyGame functions whose role is to set up and administer the game window. You may largely ignore these functions (unless you would like to learn more about interactive graphics).
 
 ## Examples
 
@@ -75,7 +84,7 @@ To reiterate: The **only** file that you need to modify to complete this project
 
 You must complete all of the requested code inside `control.py`. You can find the locations where you must write code by searching for the string "`# YOUR CODE`" in this file.  Our POTW this week and next will help you with these!
 
-### Part 2: Creative Component (BONUS)
+### Part 2: Creative Component (optional, no marks)
 
 Once you have completed the basic code above, you will have an implementation which allows for easy experimentation with different CA.  We encourage you to play around and see if you can discover a novel and interesting CA.  To fully characterize your CA you will need to determine the following elements:
 
@@ -95,11 +104,11 @@ To show us that you have completed this bonus, post your result as an animated `
 - Explains what elements you chose (your grid size, number of states, neighborhood, initialization and rules).
 - Describes why you think the CA is *interesting*.
 
-This bonus component will be worth some small bonus on your course grade.
+To create an animated `.gif` of your CA, see the `SAVE_ANIMATION` global variable in `control.py`.
 
 ## Handing in your work
 
-Submit the `control.py` file to PrairieLearn.  PL will only test the basic code which implements the three required examples, but if you did the bonus then make sure that code is in the file as well (for potential manual review).
+Submit the `control.py` file to PrairieLearn.  PL will only test the basic code which implements the three required examples, but if you did the bonus then please include that code in the file as well (with distinct function names).
 
 ## Optional resources
 
